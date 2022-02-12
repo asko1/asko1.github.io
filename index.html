@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Can You Test It?</title>
+    </head>
+
+    <body>
+        <h1>Can You Test It?</h1>
+
+        <p>A simple tool to check if you can test a SCP with certain conditions based on departmental guidelines</p>
+
+
+        <p>Note that there are no SCPs that you can test with a Level-0 clearance (without supervision)</p>
+        <p>Also note, that supervision for testers isn't counted and that SD Guards CANNOT (I am too lazy to program this in yet) assist with Warning and Keneq SCPs in the HCZ.</p>
+        <label for="scp">Select a SCP:</label>
+        <select name="scp" id="scp">
+            <option value="" disabled>-- LCZ/EZ --</option>
+            <option value="SCP-002">SCP-002</option>
+            <option value="SCP-012">SCP-012</option>
+            <option value="SCP-018">SCP-018</option>
+            <option value="SCP-035">SCP-035</option>
+            <option value="SCP-079">SCP-079</option>
+            <option value="SCP-173">SCP-173</option>
+            <option value="SCP-205">SCP-205</option>
+            <option value="SCP-294">SCP-294</option>
+            <option value="SCP-714">SCP-714</option>
+            <option value="SCP-860">SCP-860</option>
+            <option value="SCP-914">SCP-914</option>
+            <option value="SCP-999">SCP-999</option>
+            <option value="SCP-1025">SCP-1025</option>
+            <option value="SCP-1074">SCP-1074</option>
+            <option value="SCP-1123">SCP-1123</option>
+            
+            <option value="" disabled>-- ACZ --</option>
+            <option value="Item-01">Item-01</option>
+            <option value="Item-02">Item-02</option>
+            <option value="Item-03">Item-03</option>
+            <option value="Item-04">Item-04</option>
+            <option value="SCP-034">SCP-034</option>
+            <option value="SCP-178">SCP-178</option>
+            <option value="SCP-513">SCP-513</option>
+            <option value="SCP-1762">SCP-1762</option>
+
+            <option value="" disabled>-- HCZ --</option>
+            <option value="SCP-017">SCP-017</option>
+            <option value="SCP-049">SCP-049</option>
+            <option value="SCP-058">SCP-058</option>
+            <option value="SCP-096">SCP-096</option>
+            <option value="SCP-106">SCP-106</option>
+            <option value="SCP-352">SCP-352</option>
+            <option value="SCP-409">SCP-409</option>
+            <option value="SCP-457">SCP-457</option>
+            <option value="SCP-742-X">SCP-742-X</option>
+            <option value="SCP-895">SCP-895</option>
+            <option value="SCP-966">SCP-966</option>
+            <option value="Item-05">SCP-1762</option>
+
+            <option value="" disabled>-- BCZ --</option>
+            <option value="SCP-008">SCP-008</option>
+            <option value="SCP-009">SCP-009</option>
+            <option value="SCP-081">SCP-081</option>
+        </select>
+
+        <label for="clearance">Clearance:</label>
+        <select name="clearance" id="clearance">
+            <option value=1>Level-1</option>
+            <option value=2>Level-2</option>
+            <option value=3>Level-3</option>
+            <option value=4>Level-4</option>
+            <option value=5>Level-5</option>
+            <option value=6>Level-6</option>
+        </select>
+
+        <label for="tester-rank">Tester Rank:</label>
+        <select name="tester-rank" id="tester-rank">
+            <option value="Assistant Researcher">Assistant Researcher</option>
+            <option value="Junior Researcher">Junior Researcher</option>
+            <option value="Researcher">Researcher</option>
+            <option value="Field Researcher">Field Researcher</option>
+            <option value="Senior Researcher+">Senior Researcher+</option>
+        </select>
+
+        <label for="sd-rank">Minimum SD Rank:</label>
+        <select name="sd-rank" id="sd-rank">
+            <option value="Recruit">Recruit</option>
+            <option value="Security Guard">Security Guard</option>
+            <option value="Security Agent">Security Agent</option>
+            <option value="JO+">JO+</option>
+        </select>
+
+        <input id="submit" type="submit" value="Submit">
+
+        <h2>Result:</h2>
+
+        <h3 id="result"></h3>
+        <h4 id="reason"></h4>
+
+        <footer>Made by asko1, all suggestions/improvements/fixes welcome at asko1#6482</footer>
+
+        <script>
+
+        const scpData = [
+        {
+        "Item": "SCP-002",
+        "ClearanceLevel": 2,
+        "ContainmentClass": "Euclid",
+        "RiskClass": "Warning",
+        "DisruptionClass": "Dark"
+        },
+        {
+        "Item": "SCP-012",
+        "ClearanceLevel": 2,
+        "ContainmentClass": "Euclid",
+        "RiskClass": "Warning",
+        "DisruptionClass": "Dark"
+        },
+        {
+        "Item": "SCP-018",
+        "ClearanceLevel": 3,
+        "ContainmentClass": "Euclid",
+        "RiskClass": "Caution",
+        "DisruptionClass": "Keneq"
+        },
+        {
+        "Item": "SCP-035",
+        "ClearanceLevel": 2,
+        "ContainmentClass": "Keter",
+        "RiskClass": "Danger",
+        "DisruptionClass": "Dark"
+        },
+        {
+        "Item": "SCP-079",
+        "ClearanceLevel": 2,
+        "ContainmentClass": "Euclid",
+        "RiskClass": "Caution",
+        "DisruptionClass": "Keneq"
+        },
+        {
+        "Item": "SCP-173",
+        "ClearanceLevel": 2,
+        "ContainmentClass": "Euclid",
+        "RiskClass": "Danger",
+        "DisruptionClass": "Ekhi"
+        },
+        {
+        "Item": "SCP-205",
+        "ClearanceLevel": 2,
+        "ContainmentClass": "Euclid",
+        "RiskClass": "Warning",
+        "DisruptionClass": "Vlam"
+        },
+        {
+        "Item": "SCP-372",
+        "ClearanceLevel": 2,
+        "ContainmentClass": "Euclid",
+        "RiskClass": "Danger",
+        "DisruptionClass": "Keneq"
+        },
+        {
+        "Item": "SCP-714",
+        "ClearanceLevel": 1,
+        "ContainmentClass": "Safe",
+        "RiskClass": "Notice",
+        "DisruptionClass": "Dark"
+        },
+        {
+        "Item": "SCP-860",
+        "ClearanceLevel": 3,
+        "ContainmentClass": "Safe",
+        "RiskClass": "Notice",
+        "DisruptionClass": "Dark"
+        },
+        {
+        "Item": "SCP-914",
+        "ClearanceLevel": 1,
+        "ContainmentClass": "Safe",
+        "RiskClass": "Notice",
+        "DisruptionClass": "Dark"
+        },
+        {
+        "Item": "SCP-999",
+        "ClearanceLevel": 2,
+        "ContainmentClass": "Safe",
+        "RiskClass": "Notice",
+        "DisruptionClass": "Dark"
+        },
+        {
+        "Item": "SCP-1025",
+        "ClearanceLevel": 6,
+        "ContainmentClass": "Safe",
+        "RiskClass": "Danger",
+        "DisruptionClass": "Vlam"
+        },
+        {
+        "Item": "SCP-1074",
+        "ClearanceLevel": 1,
+        "ContainmentClass": "Safe",
+        "RiskClass": "Caution",
+        "DisruptionClass": "Dark"
+        },
+        {
+        "Item": "SCP-1123",
+        "ClearanceLevel": 1,
+        "ContainmentClass": "Safe",
+        "RiskClass": "Notice",
+        "DisruptionClass": "Dark"
+        },
+        {
+        "Item": "SCP-294",
+        "ClearanceLevel": 2,
+        "ContainmentClass": "Euclid",
+        "RiskClass": "Notice",
+        "DisruptionClass": "Dark"
+        },
+        {
+        "Item#": "Item-01",
+        "Clearance Level": 2,
+        "Containment Class": "Safe",
+        "Risk Class": "Caution",
+        "Disruption Class": "Dark"
+        },
+        {
+        "Item#": "Item-02",
+        "Clearance Level": 2,
+        "Containment Class": "Safe",
+        "Risk Class": "Notice",
+        "Disruption Class": "Dark"
+        },
+        {
+        "Item#": "Item-03",
+        "Clearance Level": 2,
+        "Containment Class": "Safe",
+        "Risk Class": "Warning",
+        "Disruption Class": "Dark"
+        },
+        {
+        "Item#": "Item-04",
+        "Clearance Level": 2,
+        "Containment Class": "Safe",
+        "Risk Class": "Danger",
+        "Disruption Class": "Vlam"
+        },
+        {
+        "Item#": "SCP- 034",
+        "Clearance Level": 2,
+        "Containment Class": "Safe",
+        "Risk Class": "Notice",
+        "Disruption Class": "Vlam"
+        },
+        {
+        "Item#": "SCP-178",
+        "Clearance Level": 2,
+        "Containment Class": "Euclid",
+        "Risk Class": "Warning",
+        "Disruption Class": "Dark"
+        },
+        {
+        "Item#": "SCP-513",
+        "Clearance Level": 2,
+        "Containment Class": "Euclid",
+        "Risk Class": "Caution",
+        "Disruption Class": "Vlam"
+        },
+        {
+        "Item#": "SCP-1762",
+        "Clearance Level": 1,
+        "Containment Class": "Safe",
+        "Risk Class": "Notice",
+        "Disruption Class": "Dark"
+        },
+        {
+        "Item#": "SCP-017",
+        "ClearanceLevel": 3,
+        "ContainmentClass": "Keter",
+        "RiskClass": "Critical",
+        "DisruptionClass": "Ekhi"
+        },
+        {
+        "Item#": "SCP-049",
+        "ClearanceLevel": 3,
+        "ContainmentClass": "Euclid",
+        "RiskClass": "Danger",
+        "DisruptionClass": "Keneq"
+        },
+        {
+        "Item#": "SCP-058",
+        "ClearanceLevel": 4,
+        "ContainmentClass": "Keter",
+        "RiskClass": "Critical",
+        "DisruptionClass": "Ekhi"
+        },
+        {
+        "Item#": "SCP-096",
+        "ClearanceLevel": 4,
+        "ContainmentClass": "Euclid",
+        "RiskClass": "Critical",
+        "DisruptionClass": "Ekhi"
+        },
+        {
+        "Item#": "SCP-106",
+        "ClearanceLevel": 5,
+        "ContainmentClass": "Keter",
+        "RiskClass": "Critical",
+        "DisruptionClass": "Amida"
+        },
+        {
+        "Item#": "SCP-352",
+        "ClearanceLevel": 4,
+        "ContainmentClass": "Keter",
+        "RiskClass": "Danger",
+        "DisruptionClass": "Ekhi"
+        },
+        {
+        "Item#": "SCP-409",
+        "ClearanceLevel": 4,
+        "ContainmentClass": "Keter",
+        "RiskClass": "Danger",
+        "DisruptionClass": "Vlam"
+        },
+        {
+        "Item#": "SCP-457",
+        "ClearanceLevel": 4,
+        "ContainmentClass": "Euclid",
+        "RiskClass": "Warning",
+        "DisruptionClass": "Keneq"
+        },
+        {
+        "Item#": "SCP-689",
+        "ClearanceLevel": 4,
+        "ContainmentClass": "Keter",
+        "RiskClass": "Critical",
+        "DisruptionClass": "Ekhi"
+        },
+        {
+        "Item#": "SCP-742-X",
+        "ClearanceLevel": 4,
+        "ContainmentClass": "Keter",
+        "RiskClass": "Critical",
+        "DisruptionClass": "Ekhi"
+        },
+        {
+        "Item#": "SCP-895",
+        "ClearanceLevel": 3,
+        "ContainmentClass": "Euclid",
+        "RiskClass": "Caution",
+        "DisruptionClass": "Dark"
+        },
+        {
+        "Item#": "SCP-966",
+        "ClearanceLevel": 3,
+        "ContainmentClass": "Euclid",
+        "RiskClass": "Warning",
+        "DisruptionClass": "Vlam"
+        },
+        {
+        "Item#": "Item-05",
+        "ClearanceLevel": 4,
+        "ContainmentClass": "Keter",
+        "RiskClass": "Critical",
+        "DisruptionClass": "Keneq"
+        }
+    ]
+        var submit = document.getElementById("submit");
+        var result = document.getElementById("result");
+        var reason = document.getElementById("reason");
+        
+        submit.onclick = function() {
+            result.innerHTML = "";
+            reason.innerHTML = "";
+            var scp = document.getElementById("scp").value;
+            var clearance = document.getElementById("clearance").value;
+            var testerRank = document.getElementById("tester-rank").value;
+            var sdRank = document.getElementById("sd-rank").value;
+
+            console.log(scp, clearance, testerRank, sdRank)
+
+            // No, this isn't the best code
+            // But for this, it doesn't matter
+            // Consume the semen chalice
+            scpData.forEach(function(item) {
+                if (item.Item == scp) {
+                    if (clearance >= item.ClearanceLevel) {
+                        if (item.RiskClass == "Critical" || item.DisruptionClass == "Amida") {
+                            if (testerRank == "Senior Researcher+") {
+                                if (sdRank == "JO+") {
+                                    result.innerHTML = "You are authorized to test this SCP.";
+                                } else {
+                                    result.innerHTML = "You are NOT authorized to test this SCP.";
+                                    reason.innerHTML = "SD rank is not high enough.";
+                                }
+                            } else {
+                                result.innerHTML = "You are NOT authorized to test this SCP.";
+                                reason.innerHTML = "Tester rank is not high enough.";
+                            }
+
+
+                        } else if (item.RiskClass == "Danger" || item.DisruptionClass == "Ekhi") {
+                            if ((testerRank == "Senior Researcher+" || testerRank == "Field Researcher")) {
+                                if (sdRank == "Security Agent" || sdRank == "JO+") {
+                                    result.innerHTML = "You are authorized to test this SCP.";
+                                } else {
+                                    result.innerHTML = "You are NOT authorized to test this SCP.";
+                                    reason.innerHTML = "SD rank is not high enough.";
+                                }
+                            } else {
+                                result.innerHTML = "You are NOT authorized to test this SCP.";
+                                reason.innerHTML = "Tester rank is not high enough.";
+                            }
+
+
+                        } else if (item.RiskClass == "Warning" || item.DisruptionClass == "Keneq") {
+                            if ((testerRank == "Senior Researcher+" || testerRank == "Field Researcher")) {
+                                if (sdRank == "Security Agent" || sdRank == "JO+" || sdRank == "Security Guard") {
+                                    result.innerHTML = "You are authorized to test this SCP.";
+                                } else {
+                                    result.innerHTML = "You are NOT authorized to test this SCP.";
+                                    reason.innerHTML = "SD rank is not high enough.";
+                                }
+                            } else {
+                                result.innerHTML = "You are NOT authorized to test this SCP.";
+                                reason.innerHTML = "Tester rank is not high enough.";
+                            }
+
+
+                        } else if (item.RiskClass == "Caution" || item.DisruptionClass == "Vlam") {
+                            if (testerRank == "Senior Researcher+" || testerRank == "Field Researcher" || testerRank == "Researcher") {
+                                if (sdRank == "Security Agent" || sdRank == "JO+" || sdRank == "Security Guard") {
+                                    result.innerHTML = "You are authorized to test this SCP.";
+                                } else {
+                                    result.innerHTML = "You are NOT authorized to test this SCP.";
+                                    reason.innerHTML = "SD rank is not high enough.";
+                                }
+                            } else {
+                                result.innerHTML = "You are NOT authorized to test this SCP.";
+                                reason.innerHTML = "Tester rank is not high enough.";
+                            }
+
+
+                        
+                        } else if (item.RiskClass == "Notice" || item.DisruptionClass == "Dark") {
+                            if (testerRank == "Senior Researcher+" || testerRank == "Field Researcher" || testerRank == "Researcher" || testerRank == "Junior Researcher") {
+                                if ( sdRank == "Security Agent" || sdRank == "JO+" || sdRank == "Security Guard" || sdRank == "Recruit") {
+                                    result.innerHTML = "You are authorized to test this SCP.";
+                                } else {
+                                    result.innerHTML = "You are NOT authorized to test this SCP.";
+                                    reason.innerHTML = "SD rank is not high enough.";
+                                }
+                            } else {
+                                result.innerHTML = "You are NOT authorized to test this SCP.";
+                                reason.innerHTML = "Tester rank is not high enough.";
+                            }
+                        }
+
+
+                    } else {
+                        result.innerHTML = "You are NOT authorized to test this SCP.";
+                        reason.innerHTML = "Insufficient clearance level.";
+                    } //sheesh
+                }
+            });
+        }
+
+
+
+        </script>
+    </body>
+</html>
