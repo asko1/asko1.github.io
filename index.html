@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <title>Can You Test It?</title>
     </head>
 
@@ -385,11 +387,11 @@
                                 if (sdRank == "JO+") {
                                     result.innerHTML = "You are authorized to test this SCP.";
                                 } else {
-                                    result.innerHTML = "You are NOT authorized to test this SCP.";
+                                    result.innerHTML = "You are <b class=\"text-danger\">NOT</b> authorized to test this SCP.";
                                     reason.innerHTML = "SD rank is not high enough.";
                                 }
                             } else {
-                                result.innerHTML = "You are NOT authorized to test this SCP.";
+                                result.innerHTML = "You are <b class=\"text-danger\">NOT</b> authorized to test this SCP.";
                                 reason.innerHTML = "Tester rank is not high enough.";
                             }
 
@@ -399,11 +401,11 @@
                                 if (sdRank == "Security Agent" || sdRank == "JO+") {
                                     result.innerHTML = "You are authorized to test this SCP.";
                                 } else {
-                                    result.innerHTML = "You are NOT authorized to test this SCP.";
+                                    result.innerHTML = "You are <b class=\"text-danger\">NOT</b> authorized to test this SCP.";
                                     reason.innerHTML = "SD rank is not high enough.";
                                 }
                             } else {
-                                result.innerHTML = "You are NOT authorized to test this SCP.";
+                                result.innerHTML = "You are <b class=\"text-danger\">NOT</b> authorized to test this SCP.";
                                 reason.innerHTML = "Tester rank is not high enough.";
                             }
 
@@ -413,11 +415,11 @@
                                 if (sdRank == "Security Agent" || sdRank == "JO+" || sdRank == "Security Guard") {
                                     result.innerHTML = "You are authorized to test this SCP.";
                                 } else {
-                                    result.innerHTML = "You are NOT authorized to test this SCP.";
+                                    result.innerHTML = "You are <b class=\"text-danger\">NOT</b> authorized to test this SCP.";
                                     reason.innerHTML = "SD rank is not high enough.";
                                 }
                             } else {
-                                result.innerHTML = "You are NOT authorized to test this SCP.";
+                                result.innerHTML = "You are <b class=\"text-danger\">NOT</b> authorized to test this SCP.";
                                 reason.innerHTML = "Tester rank is not high enough.";
                             }
 
@@ -427,11 +429,11 @@
                                 if (sdRank == "Security Agent" || sdRank == "JO+" || sdRank == "Security Guard") {
                                     result.innerHTML = "You are authorized to test this SCP.";
                                 } else {
-                                    result.innerHTML = "You are NOT authorized to test this SCP.";
+                                    result.innerHTML = "You are <b class=\"text-danger\">NOT</b> authorized to test this SCP.";
                                     reason.innerHTML = "SD rank is not high enough.";
                                 }
                             } else {
-                                result.innerHTML = "You are NOT authorized to test this SCP.";
+                                result.innerHTML = "You are <b class=\"text-danger\">NOT</b> authorized to test this SCP.";
                                 reason.innerHTML = "Tester rank is not high enough.";
                             }
 
@@ -442,18 +444,18 @@
                                 if ( sdRank == "Security Agent" || sdRank == "JO+" || sdRank == "Security Guard" || sdRank == "Recruit") {
                                     result.innerHTML = "You are authorized to test this SCP.";
                                 } else {
-                                    result.innerHTML = "You are NOT authorized to test this SCP.";
+                                    result.innerHTML = "You are <b class=\"text-danger\">NOT</b> authorized to test this SCP.";
                                     reason.innerHTML = "SD rank is not high enough.";
                                 }
                             } else {
-                                result.innerHTML = "You are NOT authorized to test this SCP.";
+                                result.innerHTML = "You are <b class=\"text-danger\">NOT</b> authorized to test this SCP.";
                                 reason.innerHTML = "Tester rank is not high enough.";
                             }
                         }
 
 
                     } else {
-                        result.innerHTML = "You are NOT authorized to test this SCP.";
+                        result.innerHTML = "You are <b class=\"text-danger\">NOT</b> authorized to test this SCP.";
                         reason.innerHTML = "Insufficient clearance level.";
                     } //sheesh
                 }
